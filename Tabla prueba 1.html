@@ -1,0 +1,85 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+ <head>
+  <title>Pacientes 2025</title>
+  <link href="tablaet.css" rel='stylesheet'>  
+ </head>    
+
+   <p>Tabla de los pacientes presentados este año</p>
+
+  <div class="row">
+    <div class="col">
+      <div class="card card-body">
+        Buscar<input id="search-input" class="from-control" type="text">
+      </div>
+    </div>
+  </div>    
+   <table class="table table-striped">
+
+      <tr class="big-info">
+        <th class="big-info" data-colname="name" data-order="desc">Nombre</th>
+        <th data-colname="age" data-order="desc">Edad</th>
+        <th data-colname="gender" data-order="desc">Genero</th>
+      </tr>
+
+     <tbody id="mytable">   
+
+    </tbody>
+  </table>
+
+ <script>
+
+var myArray = [
+	    {'name':'Maria Castañeda', 'age':'27', 'gender':'Mujer'},
+	    {'name':'Fabricio Rosales', 'age':'20', 'gender':'Hombre'},
+	    {'name':'Gerardo Lopez', 'age':'18', 'gender':'Hombre'},
+	    {'name':'Aquafina Delfino', 'age':'19', 'gender':'Mujer'},
+	    {'name':'Rosa Samayoa', 'age':'25', 'gender':'Mujer'},
+	    {'name':'Laura Gutierres', 'age':'24', 'gender':'Mujer'},
+	]
+
+
+  $('#search-input').on('keyup', function(){
+     var value = $(this).val()
+     console.log('Value:', value)
+     var data = searchTable(value, myArray)
+    buildTable(data)
+ })
+
+ buildTable(myArray)
+
+function searchTable(value, data){
+  var filteredData=[]
+
+  for (var i =0; i < data.length; i++){
+       value=value.toLowerCase()
+       var name = data[i].name.toLowerCase()
+       var age = data[i].age
+      var gender = data[i].gender.toLowerCase()
+       if(name.includes(value) || age.includes(value) || gender.includes(value)){
+            filteredData.push(data[i])
+       }
+  }
+
+    return filteredData
+}
+	
+
+
+	function buildTable(data){
+		var table = document.getElementById('mytable')
+
+    table.innerHTML=''
+
+		for (var i = 0; i < data.length; i++){
+			var row = `<tr>
+							<td>${data[i].name}</td>
+							<td>${data[i].age}</td>
+							<td>${data[i].gender}</td>
+					  </tr>`
+			table.innerHTML += row
+
+
+		}
+	}
+</script>
